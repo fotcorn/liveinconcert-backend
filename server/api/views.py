@@ -9,6 +9,7 @@ RSVP GET/POST/PUT
 
 from rest_framework import viewsets
 
+from api.filters import EventFilter
 from api.serializers import ArtistSerializer, EventSerializer
 from liveinconcert.models import Artist, Event
 
@@ -21,3 +22,4 @@ class ArtistViewSet(viewsets.ReadOnlyModelViewSet):
 class EventViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    filter_class = EventFilter
