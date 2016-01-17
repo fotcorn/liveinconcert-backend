@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
         artists = set()
         artists.update(self.get_playlist_artists(spotify_user))
-        artists.update(self.get_library_artists(spotify_user))
+        artists.update(self.get_library_artists())
 
         for artist in artists:
             try:
@@ -44,7 +44,7 @@ class Command(BaseCommand):
             ArtistRating.objects.get_or_create(artist=artist_obj, user=user,
                                                defaults={'rating': ArtistRating.RATING_UNRATED})
 
-    def get_library_artists(self, user):
+    def get_library_artists(self):
         artist_names = set()
         offset = 0
         page_size = 50
@@ -74,7 +74,7 @@ class Command(BaseCommand):
                     tracks = traverse_dict(self.sp.user_playlist(user, playlist['id'], 'tracks'), 'tracks', 'items')
                 except KeyboardInterrupt:
                     raise CommandError('Interrupted')
-                except:
+                except spotipy.SpotifyException:
                     pass
 
                 if not tracks:
