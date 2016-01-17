@@ -29,12 +29,14 @@ class Command(BaseCommand):
             raise CommandError(u'User with username "{}" does not exist'.format(username))
 
         spotify_user = options['spotify_username']
-        token = util.prompt_for_user_token(spotify_user, scope='playlist-read-private user-library-read')
+        token = util.prompt_for_user_token(spotify_user,
+                                           scope='playlist-read-private user-library-read user-follow-read')
         self.sp = spotipy.Spotify(auth=token)
 
         artists = set()
         artists.update(self.get_playlist_artists(spotify_user))
         artists.update(self.get_library_artists())
+        artists.update(self.get_followed_artists())
 
         for artist in artists:
             try:
@@ -43,6 +45,17 @@ class Command(BaseCommand):
                 artist_obj = Artist.objects.create(name=artist)
             ArtistRating.objects.get_or_create(artist=artist_obj, user=user,
                                                defaults={'rating': ArtistRating.RATING_UNRATED})
+
+    def get_followed_artists(self):
+        artist_names = set()
+        after = None
+        while True:
+            artists = self.sp.current_user_followed_artists(limit=10, after=after)
+            artist_names.update(map(lambda a: a['name'], artists['artists']['items']))
+            after = artists['artists']['cursors']['after']
+            if after is None:
+                break
+        return artist_names
 
     def get_library_artists(self):
         artist_names = set()
