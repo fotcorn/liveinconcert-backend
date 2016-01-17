@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 class Artist(models.Model):
     name = models.CharField(max_length=500, unique=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -32,7 +32,7 @@ class ArtistRating(models.Model):
         ordering = ('artist__name', )
         unique_together = ('user', 'artist')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'{} - {}'.format(self.artist.name, self.user.get_full_name())
 
 
@@ -43,7 +43,7 @@ class Event(models.Model):
     date_time = models.DateTimeField(_('Date & Time'))
     bandsintown_id = models.CharField('BandsInTown ID', max_length=100, null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'{} {}'.format(self.name, self.date_time)
 
 
@@ -61,5 +61,5 @@ class EventRSVP(models.Model):
     event = models.ForeignKey(Event)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'{} - {} - {}'.format(self.event, self.user, self.get_rsvp_display())
