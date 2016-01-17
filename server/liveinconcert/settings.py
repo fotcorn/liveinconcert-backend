@@ -21,6 +21,7 @@ INSTALLED_APPS = (
     'oauth2_provider',
 
     'liveinconcert',
+    'artist_sources.spotify',
     'api',
 )
 

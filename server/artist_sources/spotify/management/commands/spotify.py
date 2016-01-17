@@ -1,9 +1,10 @@
-from django.contrib.auth.models import User
 import spotipy
 import spotipy.util as util
 
+from django.contrib.auth.models import User
 from django.core.management import BaseCommand, CommandError
-from artist.models import Artist, ArtistRating
+
+from liveinconcert.models import Artist, ArtistRating
 
 
 def traverse_dict(dictionary, *args):
@@ -17,19 +18,17 @@ def traverse_dict(dictionary, *args):
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
-        parser.add_argument('username', type=unicode)
-        parser.add_argument('spotify_username', type=unicode)
+        parser.add_argument('username', type=str)
+        parser.add_argument('spotify_username', type=str)
 
     def handle(self, *args, **options):
-        # username = options['username']
-        username = args[0]
+        username = options['username']
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             raise CommandError(u'User with username "{}" does not exist'.format(username))
 
-        # spotify_user = options['spotify_username']
-        spotify_user = args[1]
+        spotify_user = options['spotify_username']
         token = util.prompt_for_user_token(spotify_user)
         self.sp = spotipy.Spotify(auth=token)
 
