@@ -29,7 +29,7 @@ class Command(BaseCommand):
             raise CommandError(u'User with username "{}" does not exist'.format(username))
 
         spotify_user = options['spotify_username']
-        token = util.prompt_for_user_token(spotify_user)
+        token = util.prompt_for_user_token(spotify_user, scope='playlist-read-private user-library-read')
         self.sp = spotipy.Spotify(auth=token)
 
         artists = self.get_playlist_artists(spotify_user)
