@@ -40,7 +40,8 @@ class Command(BaseCommand):
                 artist_obj = Artist.objects.get(name__iexact=artist)
             except Artist.DoesNotExist:
                 artist_obj = Artist.objects.create(name=artist)
-            ArtistRating.objects.get_or_create(artist=artist_obj, user=user, defaults={'rating': ArtistRating.LIKE})
+            ArtistRating.objects.get_or_create(artist=artist_obj, user=user,
+                                               defaults={'rating': ArtistRating.RATING_UNRATED})
 
     def get_playlist_artists(self, user):
         artist_names = set()
@@ -49,11 +50,15 @@ class Command(BaseCommand):
 
         while True:
             playlists = self.sp.user_playlists(user, limit=page_size, offset=offset)
+
             if not len(playlists['items']):
                 break
             for playlist in playlists['items']:
+                print(playlist['name'])
                 try:
                     tracks = traverse_dict(self.sp.user_playlist(user, playlist['id'], 'tracks'), 'tracks', 'items')
+                except KeyboardInterrupt:
+                    raise CommandError('Interrupted')
                 except:
                     pass
 
@@ -68,5 +73,4 @@ class Command(BaseCommand):
                         artist_names.add(artist['name'])
 
             offset += page_size
-
         return artist_names
