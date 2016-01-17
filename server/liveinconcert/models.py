@@ -15,12 +15,14 @@ class ArtistRating(models.Model):
     RATING_LIKE = 2
     RATING_KNOW = 3
     RATING_NO = 4
+    RATING_UNRATED = 5
 
     RATING_CHOICES = (
         (RATING_LOVE, _('Love')),
         (RATING_LIKE, _('Like')),
         (RATING_KNOW, _('Know')),
         (RATING_NO, _('Do not like')),
+        (RATING_UNRATED, _('Not yet rated')),
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     artist = models.ForeignKey(Artist)
