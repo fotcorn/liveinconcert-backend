@@ -9,8 +9,8 @@ RSVP GET/POST/PUT
 
 from rest_framework import viewsets, permissions
 
-from api.filters import EventFilter
-from api.serializers import ArtistSerializer, EventSerializer, ArtistRatingSerializer, EventRSVPSerializer
+from .filters import EventFilter
+from .serializers import ArtistSerializer, EventSerializer, ArtistRatingSerializer, EventRSVPSerializer
 from liveinconcert.models import Artist, Event, ArtistRating, EventRSVP
 
 
