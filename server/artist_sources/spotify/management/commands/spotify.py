@@ -32,8 +32,9 @@ class Command(BaseCommand):
         token = util.prompt_for_user_token(spotify_user, scope='playlist-read-private user-library-read')
         self.sp = spotipy.Spotify(auth=token)
 
-        artists = self.get_playlist_artists(spotify_user)
-        artists = list(artists)
+        artists = set()
+        artists.update(self.get_playlist_artists(spotify_user))
+        artists.update(self.get_library_artists(spotify_user))
 
         for artist in artists:
             try:
@@ -42,6 +43,20 @@ class Command(BaseCommand):
                 artist_obj = Artist.objects.create(name=artist)
             ArtistRating.objects.get_or_create(artist=artist_obj, user=user,
                                                defaults={'rating': ArtistRating.RATING_UNRATED})
+
+    def get_library_artists(self, user):
+        artist_names = set()
+        offset = 0
+        page_size = 50
+
+        while True:
+            tracks = self.sp.current_user_saved_tracks(limit=page_size, offset=offset)
+            if not len(tracks['items']):
+                break
+            for track in tracks['items']:
+                artist_names.update(map(lambda a: a['name'], track['track']['artists']))
+            offset += page_size
+        return artist_names
 
     def get_playlist_artists(self, user):
         artist_names = set()
