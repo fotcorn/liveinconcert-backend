@@ -22,6 +22,7 @@ INSTALLED_APPS = (
 
     'liveinconcert',
     'artist_sources.spotify',
+    'event_sources.bandsintown',
     'api',
 )
 
