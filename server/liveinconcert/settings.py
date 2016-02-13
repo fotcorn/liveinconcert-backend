@@ -19,10 +19,12 @@ INSTALLED_APPS = (
 
     'rest_framework',
     'oauth2_provider',
+    'django_extensions',
 
     'liveinconcert',
     'artist_sources.spotify',
     'event_sources.bandsintown',
+    'event_sources.songkick',
     'api',
 )
 

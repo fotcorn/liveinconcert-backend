@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class Artist(models.Model):
     name = models.CharField(max_length=500, unique=True)
+    songkick_id = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.name
