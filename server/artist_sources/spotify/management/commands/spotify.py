@@ -37,7 +37,7 @@ class Command(BaseCommand):
         artists.update(self.get_playlist_artists(spotify_user))
         artists.update(self.get_library_artists())
         artists.update(self.get_followed_artists())
-        artists.remove('')
+        artists.discard('')
 
         for artist in artists:
             try:
