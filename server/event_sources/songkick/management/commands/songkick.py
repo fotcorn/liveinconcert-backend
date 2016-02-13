@@ -27,7 +27,7 @@ class Command(BaseCommand):
                 print('Artist not found {}'.format(artist.name))
 
     def import_events(self):
-        for artist in Artist.objects.filter(songkick_id__isnull=False, name='The Winery Dogs'):
+        for artist in Artist.objects.filter(songkick_id__isnull=False):
             response = requests.get('http://api.songkick.com/api/3.0/artists/{}/calendar.json'.format(
                     artist.songkick_id), params={'apikey': settings.SONGKICK_API_KEY})
             results = response.json()['resultsPage']['results']
