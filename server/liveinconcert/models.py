@@ -46,6 +46,7 @@ class Event(models.Model):
     location = models.CharField(_('Location'), max_length=500)
     date_time = models.DateTimeField(_('Date & Time'))
     bandsintown_id = models.CharField('BandsInTown ID', max_length=100, null=True, blank=True)
+    songkick_id = models.IntegerField('Songkick ID', null=True, blank=True)
 
     def __str__(self):
         return u'{} {}'.format(self.name, self.date_time)
