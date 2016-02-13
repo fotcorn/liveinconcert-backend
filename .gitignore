@@ -5,3 +5,5 @@ db.sqlite3
 *.pyo
 credentials.py
 .cache-*
+.ipynb_checkpoints/
+Untitled.ipynb
