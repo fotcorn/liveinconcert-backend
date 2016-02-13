@@ -33,7 +33,3 @@ class Command(BaseCommand):
                     'date_time': datetime.strptime(event['datetime'], '%Y-%m-%dT%H:%M:%S'),
                     'bandsintown_id': event['id'],
                 })
-
-                for rating in artist.artistrating_set.exclude(rating=ArtistRating.RATING_NO):
-                    EventRSVP.objects.get_or_create(event=event_obj, user=rating.user,
-                                                    defaults={'rsvp': EventRSVP.RSVP_UNKNOWN})

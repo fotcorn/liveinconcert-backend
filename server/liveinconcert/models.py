@@ -68,3 +68,6 @@ class EventRSVP(models.Model):
 
     def __str__(self):
         return u'{} - {} - {}'.format(self.event, self.user, self.get_rsvp_display())
+
+    class Meta:
+        unique_together = ('event', 'user')
