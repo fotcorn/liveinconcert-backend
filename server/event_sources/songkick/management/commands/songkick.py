@@ -11,6 +11,7 @@ class Command(BaseCommand):
         self.sync_artist_ids()
         self.import_events()
         self.sync_venue_ids()
+        self.import_venue_events()
 
     def sync_artist_ids(self):
         for artist in Artist.objects.filter(songkick_id__isnull=True):
@@ -69,3 +70,35 @@ class Command(BaseCommand):
                 venue.save()
             else:
                 print('Venue not found {}'.format(venue.name))
+
+    def import_venue_events(self):
+        for venue in Venue.objects.filter(songkick_id__isnull=False):
+            response = requests.get('http://api.songkick.com/api/3.0/venues/{}/calendar.json'.format(
+                    venue.songkick_id), params={'apikey': settings.SONGKICK_API_KEY})
+            results = response.json()['resultsPage']['results']
+
+            if 'event' in results:
+                for event in results['event']:
+                    if event['start']['datetime']:
+                        date_time = datetime.strptime(event['start']['datetime'], '%Y-%m-%dT%H:%M:%S%z')
+                    else:
+                        date_time = datetime.strptime(event['start']['date'], '%Y-%m-%d')
+
+                    # skip duplicate events with the same name and date (but potentially not the same time)
+                    if Event.objects.exclude(songkick_id=event['id'])\
+                            .filter(name=event['displayName'], date_time__date=date_time.date()).exists():
+                        continue
+
+                    artist, _ = Artist.objects.get_or_create(songkick_id=event['performance'][0]['artist']['id'],
+                                                             defaults={
+                        'name': event['performance'][0]['artist']['displayName']})
+
+                    event_obj, _ = Event.objects.update_or_create(songkick_id=event['id'], defaults={
+                        'name': event['displayName'],
+                        'artist': artist,
+                        'venue': venue,
+                        'location': event['venue']['displayName'],
+                        'date_time': date_time,
+                        'songkick_id': event['id'],
+                    })
+                    print('Found event for {}: {}'.format(venue.name, event['displayName']))
