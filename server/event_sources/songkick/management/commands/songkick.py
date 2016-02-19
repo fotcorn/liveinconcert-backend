@@ -3,13 +3,14 @@ from datetime import datetime
 from django.core.management import BaseCommand
 from django.conf import settings
 
-from liveinconcert.models import Artist, Event
+from liveinconcert.models import Artist, Event, Venue
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         self.sync_artist_ids()
         self.import_events()
+        self.sync_venue_ids()
 
     def sync_artist_ids(self):
         for artist in Artist.objects.filter(songkick_id__isnull=True):
@@ -53,3 +54,18 @@ class Command(BaseCommand):
                             'songkick_id': event['id'],
                         })
                         print('Found event for {}: {}'.format(artist.name, event['displayName']))
+
+    def sync_venue_ids(self):
+        for venue in Venue.objects.filter(songkick_id__isnull=True):
+            response = requests.get('http://api.songkick.com/api/3.0/search/venues.json', params={
+                'query': venue.name,
+                'apikey': settings.SONGKICK_API_KEY,
+            })
+            results = response.json()['resultsPage']['results']
+
+            if 'venue' in results:
+                print('Found venue {}'.format(venue.name, results['venue'][0]['id']))
+                venue.songkick_id = results['venue'][0]['id']
+                venue.save()
+            else:
+                print('Venue not found {}'.format(venue.name))

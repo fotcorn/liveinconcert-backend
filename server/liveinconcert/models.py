@@ -40,8 +40,17 @@ class ArtistRating(models.Model):
         return u'{} - {}'.format(self.artist.name, self.user.get_full_name())
 
 
+class Venue(models.Model):
+    name = models.CharField(max_length=500)
+    songkick_id = models.IntegerField('Songkick ID', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Event(models.Model):
     name = models.CharField(max_length=500)
+    venue = models.ForeignKey(Venue, null=True, blank=True)
     artist = models.ForeignKey(Artist)
     location = models.CharField(_('Location'), max_length=500)
     date_time = models.DateTimeField(_('Date & Time'))
