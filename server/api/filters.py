@@ -9,4 +9,4 @@ class EventFilter(django_filters.FilterSet):
 
     class Meta:
         model = Event
-        fields = ()
+        fields = ('venue',)

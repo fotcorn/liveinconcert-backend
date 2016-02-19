@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from liveinconcert.models import Artist, Event, ArtistRating, EventRSVP
+from liveinconcert.models import Artist, Event, ArtistRating, EventRSVP, Venue
 
 
 class ArtistSerializer(serializers.HyperlinkedModelSerializer):
@@ -25,3 +25,9 @@ class EventRSVPSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = EventRSVP
         fields = ('event', 'rsvp')
+
+
+class VenueSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Venue
+        fields = ('id', 'name')

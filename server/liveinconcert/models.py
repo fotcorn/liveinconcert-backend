@@ -60,6 +60,9 @@ class Event(models.Model):
     def __str__(self):
         return u'{} {}'.format(self.name, self.date_time)
 
+    class Meta:
+        ordering = ('date_time',)
+
 
 class EventRSVP(models.Model):
     RSVP_YES = 1
