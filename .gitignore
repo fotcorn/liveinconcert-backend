@@ -7,3 +7,6 @@ credentials.py
 .cache-*
 .ipynb_checkpoints/
 Untitled.ipynb
+
+bundle.js
+node_modules/
