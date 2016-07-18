@@ -5,9 +5,11 @@ import AppBar from 'material-ui/lib/app-bar';
 import MusicVideo from 'material-ui/lib/svg-icons/av/music-video';
 import Colors from 'material-ui/lib/styles/colors';
 import IconButton from 'material-ui/lib/icon-button';
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/lib/table';
 import Paper from 'material-ui/lib/paper';
+import Check from 'material-ui/lib/svg-icons/navigation/check';
+import Close from 'material-ui/lib/svg-icons/navigation/close';
+
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
@@ -31,8 +33,30 @@ class VenueItem extends React.Component {
   handleClick() {
     window.open(this.props.event.url);
   }
+
+  handleCheck() {
+    alert('check');
+  }
+  handleClose() {
+    alert('close');
+  }
+
+
   render() {
-   return <ListItem primaryText={this.props.event.name + " @ " + this.props.event.location} onClick={this.handleClick}/>
+    return <TableRow>
+        <TableRowColumn>
+          <div>{this.props.event.name}</div>
+          <div>{this.props.event.location}</div>
+        </TableRowColumn>
+        <TableRowColumn>
+          <IconButton onClick={this.handleCheck}>
+            <Check/>
+          </IconButton>
+          <IconButton onClick={this.handleClose}>
+            <Close/>
+          </IconButton>
+        </TableRowColumn>
+      </TableRow>
   }
 }
 
@@ -55,9 +79,11 @@ class VenueList extends React.Component {
   }
 
   render() {
-    return <List>
+    return <Table>
+    <TableBody displayRowCheckbox={false}>
       { this.state.events.map((event) => { return <VenueItem event={event} /> }) }
-    </List>
+    </TableBody>
+  </Table>
   }
 }
 
