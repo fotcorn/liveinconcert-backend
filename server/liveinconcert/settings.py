@@ -20,6 +20,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'oauth2_provider',
     'django_extensions',
+    'corsheaders',
 
     'liveinconcert',
     'artist_sources.spotify',
@@ -37,6 +38,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 )
 
 ROOT_URLCONF = 'liveinconcert.urls'
@@ -87,5 +89,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 from .credentials import *
