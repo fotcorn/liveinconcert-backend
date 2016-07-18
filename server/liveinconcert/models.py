@@ -57,6 +57,12 @@ class Event(models.Model):
     bandsintown_id = models.CharField('BandsInTown ID', max_length=100, null=True, blank=True)
     songkick_id = models.IntegerField('Songkick ID', null=True, blank=True)
 
+    def url(self):
+        if self.bandsintown_id:
+            return 'http://www.bandsintown.com/event/{}'.format(self.bandsintown_id)
+        elif self.songkick_id:
+            return 'http://www.songkick.com/concerts/{}'.format(self.songkick_id)
+
     def __str__(self):
         return u'{} {}'.format(self.name, self.date_time)
 
