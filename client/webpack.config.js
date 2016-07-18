@@ -1,8 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
- 
 module.exports = {
-  entry: './main.jsx',
+  entry: ['whatwg-fetch', './main.jsx'],
   output: { path: __dirname, filename: 'bundle.js' },
   module: {
     loaders: [
@@ -15,5 +12,5 @@ module.exports = {
         }
       }
     ]
-  },
+  }
 };

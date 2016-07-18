@@ -24,13 +24,27 @@ const LICAppBar = () => (
 
 
 class VenueList extends React.Component {
+
+
+  constructor(props) {
+    super(props);
+    this.state = {events: []}
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:8000/api/event/')
+    .then((response) => {
+      return response.json()
+    }).then((json) => {
+      this.setState({events: json});
+    }).catch((ex) => {
+      console.log('parsing failed', ex)
+    });
+  }
+
   render() {
     return <List>
-      <ListItem primaryText="Inbox" />
-      <ListItem primaryText="Starred" />
-      <ListItem primaryText="Sent mail" />
-      <ListItem primaryText="Drafts" />
-      <ListItem primaryText="Inbox" />
+      { this.state.events.map((event) => { return <ListItem primaryText={event.name} />}) }
     </List>
   }
 }
