@@ -23,8 +23,20 @@ const LICAppBar = () => (
 );
 
 
-class VenueList extends React.Component {
+class VenueItem extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick() {
+    window.open(this.props.event.url);
+  }
+  render() {
+   return <ListItem primaryText={this.props.event.name + " @ " + this.props.event.location} onClick={this.handleClick}/>
+  }
+}
 
+class VenueList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -32,7 +44,7 @@ class VenueList extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8000/api/event/')
+    fetch('http://10.0.0.27:8000/api/event/')
     .then((response) => {
       return response.json()
     }).then((json) => {
@@ -44,7 +56,7 @@ class VenueList extends React.Component {
 
   render() {
     return <List>
-      { this.state.events.map((event) => { return <ListItem primaryText={event.name} />}) }
+      { this.state.events.map((event) => { return <VenueItem event={event} /> }) }
     </List>
   }
 }
