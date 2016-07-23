@@ -24,6 +24,8 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class EventRSVPSerializer(serializers.HyperlinkedModelSerializer):
+    event = EventSerializer()
+
     class Meta:
         model = EventRSVP
         fields = ('event', 'rsvp')

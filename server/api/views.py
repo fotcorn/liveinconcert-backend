@@ -45,4 +45,5 @@ class EventRSVPViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        return EventRSVP.objects.filter(user=self.request.user)
+        return EventRSVP.objects.filter(user=self.request.user, event__date_time__date__gte=date.today())\
+            .order_by('event__date_time')
