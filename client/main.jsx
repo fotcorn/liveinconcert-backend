@@ -45,7 +45,7 @@ class VenueItem extends React.Component {
   render() {
     return <TableRow>
         <TableRowColumn>
-          <div>{this.props.event.artist.name} @ {this.props.event.name}</div>
+          <div><a href={this.props.event.url} target="_blank">{this.props.event.artist.name} @ {this.props.event.name}</a></div>
           <div>{this.props.event.location}</div>
         </TableRowColumn>
         <TableRowColumn>
