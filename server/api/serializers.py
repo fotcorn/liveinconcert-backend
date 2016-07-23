@@ -16,6 +16,8 @@ class ArtistRatingSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
+    artist = ArtistSerializer()
+
     class Meta:
         model = Event
         fields = ('id', 'name', 'artist', 'location', 'date_time', 'url')
