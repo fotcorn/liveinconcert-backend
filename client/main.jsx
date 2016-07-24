@@ -9,6 +9,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 import Paper from 'material-ui/lib/paper';
 import Check from 'material-ui/lib/svg-icons/navigation/check';
 import Close from 'material-ui/lib/svg-icons/navigation/close';
+import Help from 'material-ui/lib/svg-icons/action/help';
 
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -43,21 +44,40 @@ class VenueItem extends React.Component {
 
   render() {
     let date_time = new Date(this.props.event.date_time).toLocaleString();
+    let icon;
+    if (this.props.rsvp.rsvp == 1) {
+      icon = <Check />
+    } else if (this.props.rsvp.rsvp == 2) {
+      icon = <Close />
+    } else {
+      icon = <Help />
+    }
     return <TableRow>
-        <TableRowColumn>
-          <div><a href={this.props.event.url} target="_blank">{this.props.event.artist.name} @ {this.props.event.name}</a></div>
-          <div>{this.props.event.location}</div>
-          <div>{date_time}</div>
-        </TableRowColumn>
-        <TableRowColumn>
+      <TableRowColumn style={{display: "flex", flexDirection: "row", paddingLeft: "12px", paddingRight: "12px"}}>
+        <div style={{marginTop: "12px", marginRight: "12px", flex: "0 0 content"}}>
+        {icon}
+        </div>
+        <div style={{flex: "1", overflowX: "hidden"}}>
+          <div>
+            <a href={this.props.event.url} target="_blank">{this.props.event.artist.name} @ {this.props.event.name}</a>
+          </div>
+          <div>
+            {this.props.event.location}
+          </div>
+          <div>
+            {date_time}
+          </div>
+        </div>
+        <div style={{flex: "0 0 content"}}>
           <IconButton onClick={this.handleCheck}>
             <Check/>
           </IconButton>
           <IconButton onClick={this.handleClose}>
             <Close/>
           </IconButton>
-        </TableRowColumn>
-      </TableRow>
+        </div>
+      </TableRowColumn>
+    </TableRow>
   }
 }
 
