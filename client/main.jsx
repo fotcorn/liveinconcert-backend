@@ -65,15 +65,16 @@ class VenueList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {events: []}
+    this.state = {event_rsvps: []}
   }
 
   componentDidMount() {
-    fetch('http://10.0.0.27:8000/api/event/')
-    .then((response) => {
+    fetch('http://10.0.0.27:8000/api/eventrsvp/', {
+      credentials: 'include'
+    }).then((response) => {
       return response.json()
     }).then((json) => {
-      this.setState({events: json});
+      this.setState({event_rsvps: json});
     }).catch((ex) => {
       console.log('parsing failed', ex)
     });
@@ -82,7 +83,7 @@ class VenueList extends React.Component {
   render() {
     return <Table>
     <TableBody displayRowCheckbox={false}>
-      { this.state.events.map((event) => { return <VenueItem event={event} /> }) }
+      { this.state.event_rsvps.map((event_rsvp) => { return <VenueItem event={event_rsvp.event} rsvp={event_rsvp}/> }) }
     </TableBody>
   </Table>
   }
