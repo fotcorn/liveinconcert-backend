@@ -12,7 +12,7 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
 class ArtistRatingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ArtistRating
-        fields = ('artist', 'rating')
+        fields = ('id', 'artist', 'rating')
 
 
 class EventSerializer(serializers.HyperlinkedModelSerializer):
@@ -28,7 +28,7 @@ class EventRSVPSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = EventRSVP
-        fields = ('event', 'rsvp')
+        fields = ('id', 'event', 'rsvp')
 
 
 class VenueSerializer(serializers.HyperlinkedModelSerializer):
