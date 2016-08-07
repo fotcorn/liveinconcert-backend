@@ -29,17 +29,27 @@ const LICAppBar = () => (
 class VenueItem extends React.Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick() {
-    window.open(this.props.event.url);
+    this.handleCheck = this.handleCheck.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handleCheck() {
-    alert('check');
+    var data = new FormData();
+    data.append("rsvp", "1");
+    fetch(`http://10.0.0.27:8000/api/eventrsvp/${this.props.rsvp.id}/`, {
+      method: "POST",
+      body: data,
+      credentials: 'include'
+    });
   }
   handleClose() {
-    alert('close');
+    var data = new FormData();
+    data.append("rsvp", "1");
+    fetch(`http://10.0.0.27:8000/api/eventrsvp/${this.props.rsvp.id}/`, {
+      method: "POST",
+      body: data,
+      credentials: 'include'
+    });
   }
 
   render() {
