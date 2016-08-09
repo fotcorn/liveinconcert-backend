@@ -1,31 +1,37 @@
 <template>
-  <div id="app" class="mdl-layout mdl-js-layout">
-    <header class="mdl-layout__header mdl-layout__header--scroll">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title">Live in Concert</span>
+  <nav class="navbar navbar-default navbar-inverse navbar-static-top">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Live in Concert</a>
       </div>
-    </header>
-    <div class="mdl-layout__drawer">
-      <span class="mdl-layout-title">Live in Concert</span>
-      <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">Upcoming Events</a>
-        <a class="mdl-navigation__link" href="">Artists</a>
-        <a class="mdl-navigation__link" href="">Locations</a>
-      </nav>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+          <li><a href="#">Link</a></li>
+        </ul>
+      </div>
     </div>
-    <main class="mdl-layout__content">
-      <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--12-col">
-          <hello></hello>
-        </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <hello></hello>
       </div>
-    </main>
+    </div>
   </div>
 </template>
 
 <script>
   import Hello from './components/Hello'
-  import 'material-design-lite'
 
   export default {
     components: {
@@ -34,5 +40,4 @@
   }
 </script>
 
-<style src="material-design-lite/dist/material.indigo-blue.min.css"></style>
-<style src="material-design-icons/iconfont/material-icons.css"></style>
+<style src="bootstrap/dist/css/bootstrap.css"></style>
