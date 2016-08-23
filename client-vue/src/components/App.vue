@@ -10,12 +10,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Live in Concert</a>
+        <span class="navbar-brand">Live in Concert</span>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-          <li><a href="#">Link</a></li>
+          <li><a v-link="{ path: '/' }">Events</a></li>
+          <li><a v-link="{ path: '/artists' }">Artists</a></li>
         </ul>
       </div>
     </div>
@@ -24,20 +24,10 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <hello></hello>
+          <router-view></router-view>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-  import Hello from './components/Hello'
-
-  export default {
-    components: {
-      Hello
-    }
-  }
-</script>
 
 <style src="bootstrap/dist/css/bootstrap.css"></style>

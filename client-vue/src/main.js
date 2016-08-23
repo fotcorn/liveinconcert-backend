@@ -1,8 +1,23 @@
 import Vue from 'vue'
-import App from './App'
+import VueRouter from 'vue-router'
 
-/* eslint-disable no-new */
-new Vue({
-  el: 'body',
-  components: { App }
+import App from './components/App'
+import EventList from './components/EventList'
+import ArtistList from './components/ArtistList'
+
+Vue.use(VueRouter)
+
+var router = new VueRouter({
+  'history': true
 })
+
+router.map({
+  '/': {
+    component: EventList
+  },
+  '/artists': {
+    component: ArtistList
+  }
+})
+
+router.start(App, 'body')
