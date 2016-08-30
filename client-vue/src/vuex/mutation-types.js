@@ -1,0 +1,4 @@
+export const LOAD_ARTISTS = 'LOAD_ARTISTS'
+export const LOAD_EVENTS = 'LOAD_EVENTS'
+export const SET_ARTIST_RATING = 'SET_ARTIST_RATING'
+export const SET_EVENT_RSVP = 'SET_EVENT_RSVP'

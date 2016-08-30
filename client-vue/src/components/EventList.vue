@@ -9,21 +9,32 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Rammstein</td>
-        <td>Sonisphere Luzern</td>
-        <td>12.7.2016</td>
+      <tr v-for="event in events">
+        <td>{{ event.artist.name }}</td>
+        <td>{{ event.location }}</td>
+        <td>{{ event.date_time }}</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
+  import {loadEvents, setEventRating} from '../vuex/actions'
+
   export default {
-    methods: {
-      clicked () {
-        window.alert('clicked')
+    vuex: {
+      actions: {
+        loadEvents,
+        setEventRating
+      },
+      getters: {
+        events (state) {
+          return state.events
+        }
       }
+    },
+    created () {
+      this.loadEvents()
     }
   }
 </script>
