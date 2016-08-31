@@ -1,5 +1,7 @@
 import os
 
+import datetime
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -90,6 +92,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
+}
+
+JWT = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=14),
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

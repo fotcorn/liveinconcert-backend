@@ -25,6 +25,11 @@ export default {
     }
   },
 
+  deauth () {
+    this.isAuthenticated = false
+    window.localStorage.removeItem(JWT_LOCAL_STORAGE)
+  },
+
   _setToken (token) {
     Vue.http.headers.common['Authorization'] = 'JWT ' + token
   }

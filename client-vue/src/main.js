@@ -45,5 +45,14 @@ router.beforeEach(function (transition) {
 
 Auth.checkAuth()
 
+Vue.http.interceptors.push((request, next) => {
+  next((response) => {
+    if (response.status === 403) {
+      Auth.deauth()
+      router.go('/login')
+    }
+  })
+})
+
 const App = Vue.extend(require('./components/App.vue'))
 router.start(App, '#app')
