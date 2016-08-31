@@ -34,6 +34,12 @@
 
 <style src="bootstrap/dist/css/bootstrap.css"></style>
 
+<style lang="scss">
+  body {
+    overflow-y: scroll;
+  }
+</style>
+
 <script>
   import store from './../vuex/store'
   export default {
