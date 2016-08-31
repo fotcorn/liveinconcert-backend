@@ -38,6 +38,9 @@
   body {
     overflow-y: scroll;
   }
+  #app .navbar-brand {
+    color: #ffffff;
+  }
 </style>
 
 <script>
