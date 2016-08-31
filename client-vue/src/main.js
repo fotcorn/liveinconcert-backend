@@ -11,6 +11,7 @@ import Auth from './services/auth'
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
+// routing
 var router = new VueRouter({
   'history': true
 })
@@ -27,6 +28,7 @@ router.map({
   }
 })
 
+// authentication
 router.beforeEach(function (transition) {
   if (Auth.isAuthenticated) {
     if (transition.to.path === '/login') {
@@ -54,5 +56,9 @@ Vue.http.interceptors.push((request, next) => {
   })
 })
 
+// http/resource
+Vue.http.options.root = 'http://localhost:8000/api'
+
+// app startup
 const App = Vue.extend(require('./components/App.vue'))
 router.start(App, '#app')

@@ -46,9 +46,6 @@
 <script>
   import store from './../vuex/store'
   export default {
-    store,
-    http: {
-      root: 'http://localhost:8000/api'
-    }
+    store
   }
 </script>
