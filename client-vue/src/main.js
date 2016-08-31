@@ -4,6 +4,9 @@ import VueResource from 'vue-resource'
 
 import EventList from './components/EventList'
 import ArtistList from './components/ArtistList'
+import Login from './components/Login'
+
+import Auth from './services/auth'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -18,8 +21,29 @@ router.map({
   },
   '/artists': {
     component: ArtistList
+  },
+  '/login': {
+    component: Login
   }
 })
+
+router.beforeEach(function (transition) {
+  if (Auth.isAuthenticated) {
+    if (transition.to.path === '/login') {
+      transition.redirect('/') // go to EventList when already logged in
+    } else {
+      transition.next()
+    }
+  } else {
+    if (transition.to.path === '/login') {
+      transition.next()
+    } else {
+      transition.redirect('/login')
+    }
+  }
+})
+
+Auth.checkAuth()
 
 const App = Vue.extend(require('./components/App.vue'))
 router.start(App, '#app')
