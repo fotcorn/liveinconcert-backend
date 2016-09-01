@@ -1,12 +1,12 @@
 import Vue from 'vue'
-import {LOAD_EVENTS} from './mutation-types'
+import {LOAD_EVENT_RSVPS} from './mutation-types'
 
-export function loadEvents ({dispatch}) {
-  Vue.http.get('event/').then(response => {
-    dispatch(LOAD_EVENTS, response.json())
+export function loadEventRSVPs ({dispatch}) {
+  Vue.http.get('eventrsvp/').then(response => {
+    dispatch(LOAD_EVENT_RSVPS, response.json())
   })
 }
 
-export function setEventRating ({dispatch}, eventId, rating) {
+export function setEventRSVP ({dispatch}, rsvpId, rating) {
   // TODO
 }

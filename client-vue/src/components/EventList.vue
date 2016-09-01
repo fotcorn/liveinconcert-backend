@@ -9,32 +9,32 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="event in events">
-        <td>{{ event.artist.name }}</td>
-        <td>{{ event.location }}</td>
-        <td>{{ event.date_time }}</td>
+      <tr v-for="rsvp in rsvps">
+        <td>{{ rsvp.event.artist.name }}</td>
+        <td>{{ rsvp.event.location }}</td>
+        <td>{{ rsvp.event.date_time }}</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-  import {loadEvents, setEventRating} from '../vuex/actions'
+  import {loadEventRSVPs, setEventRating} from '../vuex/actions'
 
   export default {
     vuex: {
       actions: {
-        loadEvents,
+        loadEventRSVPs,
         setEventRating
       },
       getters: {
-        events (state) {
-          return state.events
+        rsvps (state) {
+          return state.rsvps
         }
       }
     },
     created () {
-      this.loadEvents()
+      this.loadEventRSVPs()
     }
   }
 </script>

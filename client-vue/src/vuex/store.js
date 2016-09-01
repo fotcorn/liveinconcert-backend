@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 const state = {
   artists: {},
-  events: {}
+  rsvps: {}
 }
 
 export default new Vuex.Store({
