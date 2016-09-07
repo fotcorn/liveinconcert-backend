@@ -33,6 +33,7 @@
 </template>
 
 <style src="bootstrap/dist/css/bootstrap.css"></style>
+<style src="font-awesome/css/font-awesome.css"></style>
 
 <style lang="scss">
   body {
