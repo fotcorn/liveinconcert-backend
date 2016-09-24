@@ -10,7 +10,7 @@ export default {
   [types.SET_ARTIST_RATING] (state, artistId, rating) {
     state.artists[artistId].rating = rating
   },
-  [types.SET_EVENT_RSVP] (state, eventId, rsvp) {
-    state.events[eventId].rsvp = rsvp
+  [types.SET_EVENT_RSVP] (state, rsvpId, rsvp) {
+    // TODO state.rsvps[rsvpId].rsvp = rsvp
   }
 }

@@ -57,8 +57,8 @@ Vue.http.interceptors.push((request, next) => {
 })
 
 // http/resource
-Vue.http.options.root = 'http://192.168.43.234:8000/api'
-// Vue.http.options.root = 'http://localhost:8000/api'
+// Vue.http.options.root = 'http://192.168.43.234:8000/api'
+Vue.http.options.root = 'http://localhost:8000/api'
 
 // app startup
 const App = Vue.extend(require('./components/App.vue'))

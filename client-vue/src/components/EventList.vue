@@ -10,13 +10,13 @@
         </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success">
+            <button type="button" class="btn btn-success" v-bind:class="{'active': rsvp.rsvp == 1}" v-on:click="setEventRSVP(rsvp.id, 1)">
               <i class="fa fa-thumbs-up"></i>
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default" v-bind:class="{'active': rsvp.rsvp == 3}" v-on:click="setEventRSVP(rsvp.id, 3)">
               <i class="fa fa-question"></i>
             </button>
-            <button type="button" class="btn btn-danger">
+            <button type="button" class="btn btn-danger" v-bind:class="{'active': rsvp.rsvp == 2}" v-on:click="setEventRSVP(rsvp.id, 2)">
               <i class="fa fa-thumbs-down"></i>
             </button>
           </div>
@@ -27,13 +27,13 @@
 </template>
 
 <script>
-  import {loadEventRSVPs, setEventRating} from '../vuex/actions'
+  import {loadEventRSVPs, setEventRSVP} from '../vuex/actions'
 
   export default {
     vuex: {
       actions: {
         loadEventRSVPs,
-        setEventRating
+        setEventRSVP
       },
       getters: {
         rsvps (state) {
