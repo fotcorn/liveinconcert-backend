@@ -1,0 +1,8 @@
+dj-database-url
+Django<1.11
+psycopg2
+django-cors-headers
+django-filter
+djangorestframework
+djangorestframework-jwt
+requests
