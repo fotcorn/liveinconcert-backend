@@ -186,3 +186,23 @@ SONGKICK_API_KEY = get_env_variable('SONGKICK_API_KEY')
 SPOTIFY_CLIENT_ID = get_env_variable('SPOTIFY_CLIENT_ID')
 SPOTIFY_CLIENT_SECRET = get_env_variable('SPOTIFY_CLIENT_SECRET')
 SPOTIFY_REDIRECT_URI = get_env_variable('SPOTIFY_REDIRECT_URI')
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': get_env_variable('LOG_FILE', '/tmp/django.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
