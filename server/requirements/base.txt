@@ -13,3 +13,4 @@ djangorestframework==3.4.7
 psycopg2==2.6.2
 PyJWT==1.4.2              # via djangorestframework-jwt
 requests==2.11.1
+spotipy==2.3.8

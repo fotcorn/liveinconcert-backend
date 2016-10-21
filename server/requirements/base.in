@@ -6,3 +6,4 @@ django-filter
 djangorestframework
 djangorestframework-jwt
 requests
+spotipy
