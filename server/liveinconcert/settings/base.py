@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'event_sources.bandsintown',
     'event_sources.songkick',
     'api',
+    'frontend',
 )
 
 # List of middleware classes to use. Order is important; in the request phase,
