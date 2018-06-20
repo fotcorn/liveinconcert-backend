@@ -1,7 +1,0 @@
-- name: setup the server
-  hosts: server
-  roles:
-    - common
-    - database
-    - webserver
-    - appserver

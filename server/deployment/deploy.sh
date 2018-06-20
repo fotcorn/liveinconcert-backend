@@ -1,1 +1,0 @@
-django-ansible/scripts/deploy.sh
