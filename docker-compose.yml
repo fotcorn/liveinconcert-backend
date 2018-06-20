@@ -15,6 +15,7 @@ services:
       - "DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres"
       - "SECRET_KEY=${SECRET_KEY}"
       - "ALLOWED_HOSTS=${DOMAIN}"
+      - "
     depends_on:
       - postgres
     networks:

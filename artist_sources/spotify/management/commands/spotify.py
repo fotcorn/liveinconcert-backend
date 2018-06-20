@@ -1,9 +1,7 @@
 import spotipy
-import spotipy.util as util
-
-from django.contrib.auth.models import User
 from django.core.management import BaseCommand, CommandError
 
+from artist_sources.spotify.models import SpotifyProfile
 from liveinconcert.models import Artist, ArtistRating
 
 
@@ -17,35 +15,24 @@ def traverse_dict(dictionary, *args):
 
 
 class Command(BaseCommand):
-    def add_arguments(self, parser):
-        parser.add_argument('username', type=str)
-        parser.add_argument('spotify_username', type=str)
 
     def handle(self, *args, **options):
-        username = options['username']
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            raise CommandError(u'User with username "{}" does not exist'.format(username))
+        for spotify_profile in SpotifyProfile.objects.all():
+            self.sp = spotipy.Spotify(auth=spotify_profile.access_token)
 
-        spotify_user = options['spotify_username']
-        token = util.prompt_for_user_token(spotify_user,
-                                           scope='playlist-read-private user-library-read user-follow-read')
-        self.sp = spotipy.Spotify(auth=token)
+            artists = set()
+            artists.update(self.get_playlist_artists(spotify_profile.username))
+            artists.update(self.get_library_artists())
+            artists.update(self.get_followed_artists())
+            artists.discard('')
 
-        artists = set()
-        artists.update(self.get_playlist_artists(spotify_user))
-        artists.update(self.get_library_artists())
-        artists.update(self.get_followed_artists())
-        artists.discard('')
-
-        for artist in artists:
-            try:
-                artist_obj = Artist.objects.get(name__iexact=artist)
-            except Artist.DoesNotExist:
-                artist_obj = Artist.objects.create(name=artist)
-            ArtistRating.objects.get_or_create(artist=artist_obj, user=user,
-                                               defaults={'rating': ArtistRating.RATING_UNRATED})
+            for artist in artists:
+                try:
+                    artist_obj = Artist.objects.get(name__iexact=artist)
+                except Artist.DoesNotExist:
+                    artist_obj = Artist.objects.create(name=artist)
+                ArtistRating.objects.get_or_create(artist=artist_obj, user=spotify_profile.user,
+                                                   defaults={'rating': ArtistRating.RATING_UNRATED})
 
     def get_followed_artists(self):
         artist_names = set()

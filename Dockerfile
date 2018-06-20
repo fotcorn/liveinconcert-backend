@@ -34,7 +34,6 @@ ENV UWSGI_WSGI_FILE=/code/toollist/wsgi.py UWSGI_HTTP=:8000 UWSGI_MASTER=1 UWSGI
 
 WORKDIR /code
 RUN DATABASE_URL=sqlite:///tmp/db.sqlite SECRET_KEY=none python manage.py collectstatic --noinput
-RUN DATABASE_URL=sqlite:///tmp/db.sqlite SECRET_KEY=none python manage.py compilemessages
 
 EXPOSE 8000
 
