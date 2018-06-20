@@ -1,3 +1,0 @@
-[submodule "server/deployment/django-ansible"]
-	path = server/deployment/django-ansible
-	url = https://github.com/liip/django-ansible.git
