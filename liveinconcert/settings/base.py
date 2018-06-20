@@ -7,7 +7,7 @@ WSGI_APPLICATION = 'liveinconcert.wsgi.application'
 
 # Internationalization
 LANGUAGE_CODE = 'en'
-TIME_ZONE = None
+TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -72,12 +72,6 @@ TEMPLATES = [{
             'django.template.context_processors.tz',
             'django.template.context_processors.static',
         ],
-        'loaders': [
-            ('django.template.loaders.cached.Loader', [
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader',
-            ]),
-        ]
     },
 }]
 
@@ -123,7 +117,7 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework.filters.DjangoFilterBackend',
+        'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',

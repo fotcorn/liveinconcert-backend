@@ -28,8 +28,8 @@ class ArtistRating(models.Model):
         (RATING_NO, _('Do not like')),
         (RATING_UNRATED, _('Not yet rated')),
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    artist = models.ForeignKey(Artist)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     rating = models.IntegerField(choices=RATING_CHOICES)
 
     class Meta:
@@ -50,8 +50,8 @@ class Venue(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=500)
-    venue = models.ForeignKey(Venue, null=True, blank=True)
-    artist = models.ForeignKey(Artist)
+    venue = models.ForeignKey(Venue, null=True, blank=True, on_delete=models.CASCADE)
+    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     location = models.CharField(_('Location'), max_length=500)
     date_time = models.DateTimeField(_('Date & Time'))
     bandsintown_id = models.CharField('BandsInTown ID', max_length=100, null=True, blank=True)
@@ -81,8 +81,8 @@ class EventRSVP(models.Model):
         (RSVP_UNKNOWN, _('Unknown')),
     )
     rsvp = models.IntegerField(choices=RSVP_CHOICES)
-    event = models.ForeignKey(Event)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return u'{} - {} - {}'.format(self.event, self.user, self.get_rsvp_display())
