@@ -1,0 +1,40 @@
+version: '2.1'
+
+services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - internal
+    restart: always
+
+  django:
+    image: fotcorn/liveinconcert-backend
+    environment:
+      - "DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres"
+      - "SECRET_KEY=${SECRET_KEY}"
+      - "ALLOWED_HOSTS=${DOMAIN}"
+    depends_on:
+      - postgres
+    networks:
+      - internal
+    restart: always
+
+  caddy:
+    image: abiosoft/caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - django
+    networks:
+      - internal
+    environment:
+      - "DOMAIN=${DOMAIN}"
+    volumes:
+    - ./Caddyfile:/etc/Caddyfile
+    restart: always
+
+networks:
+  internal:
