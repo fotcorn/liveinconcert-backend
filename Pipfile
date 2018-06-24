@@ -16,6 +16,7 @@ requests = "*"
 spotipy = "*"
 djangorestframework = "*"
 djangorestframework-jwt = "*"
+firebase-admin = "*"
 
 [requires]
 python_version = "3.6"
