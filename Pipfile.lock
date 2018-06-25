@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e6f06dcef9a799c90d7b2cd6f6129758afb73e84dbcf513a983d333b22a4d0b7"
+            "sha256": "3f0342e2e67a6f29c2840bd750435143cb60d42a885ce83e1d5c2dd537e39044"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -58,14 +58,6 @@
             "index": "pypi",
             "version": "==2.0.6"
         },
-        "django-cors-headers": {
-            "hashes": [
-                "sha256:0e9532628b3aa8806442d4d0b15e56112e6cfbef3735e13401935c98b842a2b4",
-                "sha256:c7ec4816ec49416517b84f317499d1519db62125471922ab78d670474ed9b987"
-            ],
-            "index": "pypi",
-            "version": "==2.2.0"
-        },
         "django-environ": {
             "hashes": [
                 "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde",
@@ -81,22 +73,6 @@
             ],
             "index": "pypi",
             "version": "==1.1.0"
-        },
-        "djangorestframework": {
-            "hashes": [
-                "sha256:b6714c3e4b0f8d524f193c91ecf5f5450092c2145439ac2769711f7eba89a9d9",
-                "sha256:c375e4f95a3a64fccac412e36fb42ba36881e52313ec021ef410b40f67cddca4"
-            ],
-            "index": "pypi",
-            "version": "==3.8.2"
-        },
-        "djangorestframework-jwt": {
-            "hashes": [
-                "sha256:5efe33032f3a4518a300dc51a51c92145ad95fb6f4b272e5aa24701db67936a7",
-                "sha256:ab15dfbbe535eede8e2e53adaf52ef0cf018ee27dbfad10cbc4cbec2ab63d38c"
-            ],
-            "index": "pypi",
-            "version": "==1.11.0"
         },
         "firebase-admin": {
             "hashes": [
@@ -342,13 +318,6 @@
                 "sha256:f53fe5bcebdf318f51399b250fe8325ef3a26d927f012cc0c8e0f9e9af7f9deb"
             ],
             "version": "==0.2.1"
-        },
-        "pyjwt": {
-            "hashes": [
-                "sha256:30b1380ff43b55441283cc2b2676b755cca45693ae3097325dea01f3d110628c",
-                "sha256:4ee413b357d53fd3fb44704577afac88e72e878716116270d722723d65b42176"
-            ],
-            "version": "==1.6.4"
         },
         "pytz": {
             "hashes": [
