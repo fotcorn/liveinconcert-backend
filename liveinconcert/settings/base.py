@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'graphene_django',
 
     'liveinconcert',
     'artist_sources.spotify',
@@ -137,6 +138,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 SONGKICK_API_KEY = env('SONGKICK_API_KEY', default='')
+
+GRAPHENE = {
+    'SCHEMA': 'api.schema.schema'
+}
 
 LOGGING = {
     'version': 1,
