@@ -71,16 +71,16 @@ class Event(models.Model):
 
 
 class EventRSVP(models.Model):
-    RSVP_YES = 1
-    RSVP_NO = 2
-    RSVP_UNKNOWN = 3
+    RSVP_YES = 'yes'
+    RSVP_NO = 'no'
+    RSVP_UNKNOWN = 'not_yet_answered'
 
     RSVP_CHOICES = (
         (RSVP_YES, _('Yes')),
         (RSVP_NO, _('No')),
-        (RSVP_UNKNOWN, _('Unknown')),
+        (RSVP_UNKNOWN, _('No yet answered')),
     )
-    rsvp = models.IntegerField(choices=RSVP_CHOICES)
+    rsvp = models.CharField(choices=RSVP_CHOICES, max_length=20)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
