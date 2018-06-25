@@ -41,5 +41,12 @@ class EventRSVPNode(DjangoObjectType):
 class Query(graphene.ObjectType):
     event_rsvps = DjangoFilterConnectionField(EventRSVPNode)
 
+    def resolve_event_rsvps(self, info):
+        # context will reference to the Django request
+        if not info.context.user.is_authenticated:
+            return EventRSVP.objects.none()
+        else:
+            return EventRSVP.objects.filter(user=info.context.user)
+
 
 schema = graphene.Schema(query=Query)
