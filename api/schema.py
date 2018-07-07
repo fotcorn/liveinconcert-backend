@@ -1,4 +1,6 @@
 import graphene
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from graphene import relay
 from graphene_django.filter.fields import DjangoFilterConnectionField
 from graphene_django.types import DjangoObjectType
@@ -38,6 +40,39 @@ class EventRSVPNode(DjangoObjectType):
         interfaces = (relay.Node,)
 
 
+class UserNode(DjangoObjectType):
+    class Meta:
+        model = User
+
+
+class Login(graphene.Mutation):
+    user = graphene.Field(UserNode)
+
+    class Arguments:
+        username = graphene.String()
+        password = graphene.String()
+
+    Output = UserNode
+
+    @staticmethod
+    def mutate(root, info, **input):
+        user = authenticate(
+            username=input.get('username'),
+            password=input.get('password'),
+        )
+
+        if not user:
+            raise Exception('Invalid username or password!')
+
+        login(info.context, user)
+
+        return user
+
+
+class Mutations(graphene.ObjectType):
+    login = Login.Field()
+
+
 class Query(graphene.ObjectType):
     event_rsvps = DjangoFilterConnectionField(EventRSVPNode)
 
@@ -49,4 +84,4 @@ class Query(graphene.ObjectType):
             return EventRSVP.objects.filter(user=info.context.user)
 
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, mutation=Mutations)
