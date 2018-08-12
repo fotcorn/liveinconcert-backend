@@ -95,6 +95,7 @@ INSTALLED_APPS = (
     'event_sources.bandsintown',
     'event_sources.songkick',
     'api',
+    'push',
 )
 
 # List of middleware classes to use. Order is important; in the request phase,
@@ -113,7 +114,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SONGKICK_API_KEY = env('SONGKICK_API_KEY', default='')
 
 GRAPHENE = {
     'SCHEMA': 'api.schema.schema'
@@ -146,3 +146,7 @@ LOGGING = {
         },
     }
 }
+
+
+SONGKICK_API_KEY = env('SONGKICK_API_KEY', default='')
+FIREBASE_CREDENTIALS_PATH = env('FIREBASE_CREDENTIALS_PATH', default='')

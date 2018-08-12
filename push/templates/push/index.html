@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test</title>
+</head>
+<body>
+
+{% if request.user.is_authenticated %}
+  <form action="" method="post">
+    {% csrf_token %}
+    Text: <input name="text">
+    <br>
+    <input type="submit" value="Send">
+  </form>
+{% else %}
+  Not authenticated
+{% endif %}
+
+<ul>
+  {% for token in sent %}
+    <li>{{ token }}</li>
+  {% endfor %}
+</ul>
+
+</body>
+</html>

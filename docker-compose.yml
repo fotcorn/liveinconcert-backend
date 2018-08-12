@@ -5,9 +5,7 @@ services:
     image: postgres:alpine
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    networks:
-      - internal
-    restart: always
+    restart: unless-stopped
 
   django:
     image: fotcorn/liveinconcert-backend
@@ -15,12 +13,12 @@ services:
       - "DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres"
       - "SECRET_KEY=${SECRET_KEY}"
       - "ALLOWED_HOSTS=${DOMAIN}"
+      - "FIREBASE_CREDENTIALS_PATH=/etc/firebase_credentials.json"
     depends_on:
       - postgres
-    networks:
-      - internal
-    restart: always
-
+    restart: unless-stopped
+    volumes:
+      - ./credentials.json:/etc/firebase_credentials.json
   caddy:
     image: abiosoft/caddy
     ports:
@@ -28,13 +26,8 @@ services:
       - "443:443"
     depends_on:
       - django
-    networks:
-      - internal
     environment:
       - "DOMAIN=${DOMAIN}"
     volumes:
     - ./Caddyfile:/etc/Caddyfile
-    restart: always
-
-networks:
-  internal:
+    restart: unless-stopped
