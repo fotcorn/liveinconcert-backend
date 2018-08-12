@@ -1,13 +1,11 @@
-from . import get_env_variable
 from .base import *
 
-DEBUG = bool(get_env_variable('DEBUG', True))
-DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
-MIDDLEWARE_CLASSES += (
+DEBUG = True
+
+MIDDLEWARE += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
-SECRET_KEY = 'notsosecret'
 INTERNAL_IPS = ('127.0.0.1',)
 
 INSTALLED_APPS += (
@@ -15,7 +13,15 @@ INSTALLED_APPS += (
     'django_extensions',
 )
 
-TEMPLATES[0]['OPTIONS']['loaders'] = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader'
-)
+# log ./mange.py runserver requests
+LOGGING['loggers']['django.server'] = {
+    'handlers': ['console'],
+    'level': 'INFO',
+    'propagate': False,
+}
+
+LOGGING['loggers']['django.db.backends'] = {
+    'handlers': ['console'],
+    'level': 'ERROR',  # change this to DEBUG to log executed SQL statements
+    'propagate': False,
+}
