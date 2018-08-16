@@ -6,6 +6,8 @@ services:
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: unless-stopped
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
 
   django:
     image: fotcorn/liveinconcert-backend
@@ -14,11 +16,16 @@ services:
       - "SECRET_KEY=${SECRET_KEY}"
       - "ALLOWED_HOSTS=${DOMAIN}"
       - "FIREBASE_CREDENTIALS_PATH=/etc/firebase_credentials.json"
+      - "SONGKICK_API_KEY=${SONGKICK_API_KEY}"
+      - "SPOTIPY_CLIENT_ID=${SPOTIPY_CLIENT_ID}"
+      - "SPOTIPY_CLIENT_SECRET=${SPOTIPY_CLIENT_SECRET}"
+      - "SPOTIPY_REDIRECT_URI=${SPOTIPY_REDIRECT_URI}"
     depends_on:
       - postgres
     restart: unless-stopped
     volumes:
       - ./credentials.json:/etc/firebase_credentials.json
+
   caddy:
     image: abiosoft/caddy
     ports:
