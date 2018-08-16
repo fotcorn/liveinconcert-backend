@@ -1,7 +1,9 @@
+import os
 import datetime
 import environ
 env = environ.Env(DEBUG=(bool, False),)
-environ.Env.read_env('.env')
+if os.path.exists('.env'):
+    environ.Env.read_env('.env')
 
 WSGI_APPLICATION = 'liveinconcert.wsgi.application'
 
@@ -38,8 +40,12 @@ SECRET_KEY = env('SECRET_KEY')
 # DATABASES #
 #############
 
-DATABASES = {
-    'default': env.db()
+# Database (variable can be unset to e.g. run collectstatic without database)
+database_url = env(env.DEFAULT_DATABASE_ENV, default=None)
+if database_url:
+    default_database = env.db_url_config(database_url)
+    DATABASES = {
+        'default': default_database,
 }
 
 #########
