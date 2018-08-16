@@ -8,11 +8,11 @@ django-debug-toolbar = "*"
 django-extensions = "*"
 
 [packages]
-Django = "*"
+Django = "<2.1"
 "psycopg2-binary" = "*"
 django-environ = "*"
 whitenoise = "*"
-django-filter = "*"
+django-filter = "<2"
 requests = "*"
 spotipy = "*"
 firebase-admin = "*"
