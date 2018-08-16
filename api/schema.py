@@ -1,3 +1,4 @@
+from datetime import datetime
 import graphene
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -77,11 +78,18 @@ class Query(graphene.ObjectType):
     event_rsvps = DjangoFilterConnectionField(EventRSVPNode)
 
     def resolve_event_rsvps(self, info):
-        # context will reference to the Django request
-        if not info.context.user.is_authenticated:
-            return EventRSVP.objects.none()
-        else:
-            return EventRSVP.objects.filter(user=info.context.user)
+        return EventRSVP.objects\
+            .order_by('event__date_time')\
+            .filter(event__date_time__gt=datetime.now())\
+            .select_related('event', 'event__artist')
+
+    # do not filter by user
+    # def resolve_event_rsvps(self, info):
+    #     # context will reference to the Django request
+    #     if not info.context.user.is_authenticated:
+    #         return EventRSVP.objects.none()
+    #     else:
+    #         return EventRSVP.objects.filter(user=info.context.user)
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)
