@@ -1,3 +1,4 @@
+from django import forms
 from django.utils import timezone
 import graphene
 from django.contrib.auth import authenticate, login
@@ -5,7 +6,9 @@ from django.contrib.auth.models import User
 from graphene import relay
 from graphene_django.filter.fields import DjangoFilterConnectionField
 from graphene_django.types import DjangoObjectType
+from rest_framework import serializers
 
+from api.base import DjangoModelFormRelayMutation, RelaySerializerMutation
 from liveinconcert.models import Artist, Venue, EventRSVP, ArtistRating, Event
 
 
@@ -41,6 +44,18 @@ class EventRSVPNode(DjangoObjectType):
         interfaces = (relay.Node,)
 
 
+class EventRSVPSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventRSVP
+        fields = ('rsvp',)
+
+
+class EventRSVPMutation(RelaySerializerMutation):
+    class Meta:
+        serializer_class = EventRSVPSerializer
+        model_operations = ['update']
+
+
 class UserNode(DjangoObjectType):
     class Meta:
         model = User
@@ -72,6 +87,7 @@ class Login(graphene.Mutation):
 
 class Mutations(graphene.ObjectType):
     login = Login.Field()
+    update_rsvp = EventRSVPMutation.Field()
 
 
 class Query(graphene.ObjectType):

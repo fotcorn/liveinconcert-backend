@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3109f2b7ca7aaaa4c639296e20b081cdb9de433806cd74574ff8dc5e3f418705"
+            "sha256": "8caccc97014359f46b09dc95864ffe2f7c9e30ecf00bc6c3a8477bccc5da19b5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -73,6 +73,14 @@
             ],
             "index": "pypi",
             "version": "==1.1.0"
+        },
+        "djangorestframework": {
+            "hashes": [
+                "sha256:b6714c3e4b0f8d524f193c91ecf5f5450092c2145439ac2769711f7eba89a9d9",
+                "sha256:c375e4f95a3a64fccac412e36fb42ba36881e52313ec021ef410b40f67cddca4"
+            ],
+            "index": "pypi",
+            "version": "==3.8.2"
         },
         "firebase-admin": {
             "hashes": [
