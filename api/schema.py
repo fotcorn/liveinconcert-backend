@@ -1,4 +1,4 @@
-from datetime import datetime
+from django.utils import timezone
 import graphene
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -37,7 +37,7 @@ class EventNode(DjangoObjectType):
 class EventRSVPNode(DjangoObjectType):
     class Meta:
         model = EventRSVP
-        filter_fields = ['rsvp',]
+        filter_fields = ['rsvp', ]
         interfaces = (relay.Node,)
 
 
@@ -77,19 +77,21 @@ class Mutations(graphene.ObjectType):
 class Query(graphene.ObjectType):
     event_rsvps = DjangoFilterConnectionField(EventRSVPNode)
 
-    def resolve_event_rsvps(self, info):
-        return EventRSVP.objects\
-            .order_by('event__date_time')\
-            .filter(event__date_time__gt=datetime.now())\
+    def resolve_event_rsvps(self, info, **kwargs):
+        return EventRSVP.objects \
+            .order_by('event__date_time') \
+            .filter(event__date_time__gt=timezone.now()) \
+            .filter(**kwargs) \
             .select_related('event', 'event__artist')
 
-    # do not filter by user
-    # def resolve_event_rsvps(self, info):
-    #     # context will reference to the Django request
-    #     if not info.context.user.is_authenticated:
-    #         return EventRSVP.objects.none()
-    #     else:
-    #         return EventRSVP.objects.filter(user=info.context.user)
+
+# do not filter by user
+# def resolve_event_rsvps(self, info):
+#     # context will reference to the Django request
+#     if not info.context.user.is_authenticated:
+#         return EventRSVP.objects.none()
+#     else:
+#         return EventRSVP.objects.filter(user=info.context.user)
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)
