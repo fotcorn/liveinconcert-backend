@@ -1,4 +1,3 @@
-from django import forms
 from django.utils import timezone
 import graphene
 from django.contrib.auth import authenticate, login
@@ -8,7 +7,7 @@ from graphene_django.filter.fields import DjangoFilterConnectionField
 from graphene_django.types import DjangoObjectType
 from rest_framework import serializers
 
-from api.base import DjangoModelFormRelayMutation, RelaySerializerMutation
+from api.base import RelaySerializerMutation
 from liveinconcert.models import Artist, Venue, EventRSVP, ArtistRating, Event
 
 
