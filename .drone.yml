@@ -1,0 +1,5 @@
+pipeline:
+  docker:
+    image: plugins/docker
+    repo: fotcorn/liveinconcert-backend
+    secrets: [ docker_username, docker_password ]
