@@ -1,24 +1,23 @@
 # based on https://www.caktusgroup.com/blog/2017/03/14/production-ready-dockerfile-your-python-django-app/
 
 # builder container with build dependencies
-FROM python:3.6-alpine AS builder
+FROM python:3.7-slim AS builder
 
 ADD ./Pipfile /Pipfile
 ADD ./Pipfile.lock /Pipfile.lock
 
 RUN set -ex \
-    && apk add --no-cache build-base postgresql-dev linux-headers \
+    && apt-get update \
+    && apt-get install build-essential  --no-install-recommends -y \
     && pip install pipenv \
     && pipenv install --system --deploy \
     && pip install uwsgi==2.0.17
 
 # create new container without build dependencies
-FROM python:3.6-alpine
-
-RUN apk add --no-cache libpq gettext
+FROM python:3.7-slim
 
 # copy site-packages with compiled binaries from builder container
-COPY --from=builder /usr/local/lib/python3.6/site-packages /usr/local/lib/python3.6/site-packages
+COPY --from=builder /usr/local/lib/python3.7/site-packages /usr/local/lib/python3.7/site-packages
 COPY --from=builder /usr/local/bin/uwsgi /usr/local/bin/uwsgi
 
 # copy code into container
