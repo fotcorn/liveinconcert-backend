@@ -28,6 +28,7 @@ ADD ./artist_sources/ /code/artist_sources
 ADD ./event_sources/ /code/event_sources
 ADD ./liveinconcert/ /code/liveinconcert
 ADD ./push /code/push
+ADD ./cron.sh /cron.sh
 
 ENV DEBUG False
 ENV UWSGI_WSGI_FILE=/code/liveinconcert/wsgi.py UWSGI_HTTP=:8000 UWSGI_MASTER=1 UWSGI_WORKERS=2 UWSGI_THREADS=8 UWSGI_UID=1000 UWSGI_GID=2000 UWSGI_LAZY_APPS=1 UWSGI_WSGI_ENV_BEHAVIOR=holy
