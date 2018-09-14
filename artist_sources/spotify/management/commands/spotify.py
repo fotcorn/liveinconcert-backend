@@ -21,7 +21,7 @@ class Command(BaseCommand):
             self.sp = spotipy.Spotify(auth=spotify_profile.access_token)
 
             artists = set()
-            artists.update(self.get_playlist_artists(spotify_profile.username))
+            artists.update(self.get_playlist_artists(self.sp.me()))
             artists.update(self.get_library_artists())
             artists.update(self.get_followed_artists())
             artists.discard('')
@@ -65,7 +65,7 @@ class Command(BaseCommand):
         page_size = 50
 
         while True:
-            playlists = self.sp.user_playlists(user, limit=page_size, offset=offset)
+            playlists = self.sp.current_user_playlists(limit=page_size, offset=offset)
 
             if not len(playlists['items']):
                 break
