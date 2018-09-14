@@ -7,7 +7,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from artist_sources.spotify.models import SpotifyProfile
 
 
-def _get_oauth():
+def get_oauth():
     return SpotifyOAuth(client_id=settings.SPOTIPY_CLIENT_ID,
                         client_secret=settings.SPOTIPY_CLIENT_SECRET,
                         redirect_uri=settings.SPOTIPY_REDIRECT_URI,
@@ -16,7 +16,7 @@ def _get_oauth():
 
 @login_required
 def auth(request):
-    oauth = _get_oauth()
+    oauth = get_oauth()
     url = oauth.get_authorize_url()
     return redirect(url)
 
@@ -27,7 +27,7 @@ def callback(request):
     if not code:
         return HttpResponseBadRequest()
 
-    oauth = _get_oauth()
+    oauth = get_oauth()
     token = oauth.get_access_token(code)
 
     SpotifyProfile.objects.update_or_create(user=request.user, defaults={

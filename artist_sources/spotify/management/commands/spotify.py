@@ -2,6 +2,7 @@ import spotipy
 from django.core.management import BaseCommand, CommandError
 
 from artist_sources.spotify.models import SpotifyProfile
+from artist_sources.spotify.views import get_oauth
 from liveinconcert.models import Artist, ArtistRating
 
 
@@ -19,6 +20,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for spotify_profile in SpotifyProfile.objects.all():
             try:
+                oauth = get_oauth()
+                token = oauth.refresh_access_token(spotify_profile.refresh_token)
+                spotify_profile.access_token = token['access_token']
+                spotify_profile.refresh_token = token['refresh_token']
+                spotify_profile.save()
+
                 self.sp = spotipy.Spotify(auth=spotify_profile.access_token)
 
                 artists = set()
