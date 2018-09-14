@@ -9,6 +9,7 @@ from rest_framework import serializers
 
 from api.base import RelaySerializerMutation
 from liveinconcert.models import Artist, Venue, EventRSVP, ArtistRating, Event
+from push.models import FirebasePushToken
 
 
 class ArtistNode(DjangoObjectType):
@@ -40,6 +41,12 @@ class EventRSVPNode(DjangoObjectType):
     class Meta:
         model = EventRSVP
         filter_fields = ['rsvp', ]
+        interfaces = (relay.Node,)
+
+
+class FirebasePushTokenNode(DjangoObjectType):
+    class Meta:
+        model = FirebasePushToken
         interfaces = (relay.Node,)
 
 
@@ -84,9 +91,28 @@ class Login(graphene.Mutation):
         return user
 
 
+class FirebasePushTokenMutation(graphene.Mutation):
+    push_token = graphene.Field(FirebasePushTokenNode)
+
+    class Arguments:
+        token = graphene.String()
+
+    Output = FirebasePushTokenNode
+
+    @staticmethod
+    def mutate(root, info, **input):
+        push_token = input.get('token')
+        try:
+            token = FirebasePushToken.objects.get(token=push_token)
+        except FirebasePushToken.DoesNotExist:
+            token = FirebasePushToken.objects.create(token=push_token, user=User.objects.first())
+        return token
+
+
 class Mutations(graphene.ObjectType):
     login = Login.Field()
     update_rsvp = EventRSVPMutation.Field()
+    create_firebase_token = FirebasePushTokenMutation.Field()
 
 
 class Query(graphene.ObjectType):
