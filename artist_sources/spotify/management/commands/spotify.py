@@ -18,21 +18,24 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for spotify_profile in SpotifyProfile.objects.all():
-            self.sp = spotipy.Spotify(auth=spotify_profile.access_token)
+            try:
+                self.sp = spotipy.Spotify(auth=spotify_profile.access_token)
 
-            artists = set()
-            artists.update(self.get_playlist_artists(self.sp.me()))
-            artists.update(self.get_library_artists())
-            artists.update(self.get_followed_artists())
-            artists.discard('')
+                artists = set()
+                artists.update(self.get_playlist_artists(self.sp.me()['id']))
+                artists.update(self.get_library_artists())
+                artists.update(self.get_followed_artists())
+                artists.discard('')
 
-            for artist in artists:
-                try:
-                    artist_obj = Artist.objects.get(name__iexact=artist)
-                except Artist.DoesNotExist:
-                    artist_obj = Artist.objects.create(name=artist)
-                ArtistRating.objects.get_or_create(artist=artist_obj, user=spotify_profile.user,
-                                                   defaults={'rating': ArtistRating.RATING_UNRATED})
+                for artist in artists:
+                    try:
+                        artist_obj = Artist.objects.get(name__iexact=artist)
+                    except Artist.DoesNotExist:
+                        artist_obj = Artist.objects.create(name=artist)
+                    ArtistRating.objects.get_or_create(artist=artist_obj, user=spotify_profile.user,
+                                                       defaults={'rating': ArtistRating.RATING_UNRATED})
+            except:
+                continue
 
     def get_followed_artists(self):
         artist_names = set()
@@ -75,8 +78,9 @@ class Command(BaseCommand):
                     tracks = traverse_dict(self.sp.user_playlist(user, playlist['id'], 'tracks'), 'tracks', 'items')
                 except KeyboardInterrupt:
                     raise CommandError('Interrupted')
-                except spotipy.SpotifyException:
-                    pass
+                except spotipy.SpotifyException as ex:
+                    print(ex)
+                    continue
 
                 if not tracks:
                     continue
