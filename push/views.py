@@ -8,5 +8,4 @@ def send_notification(request):
     if request.method == 'POST' and request.user.is_authenticated:
         text = request.POST['text']
         send_message_user(request.user, text)
-
     return render(request, 'push/index.html', {'sent': sent})
