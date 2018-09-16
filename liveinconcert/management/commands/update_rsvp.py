@@ -5,7 +5,7 @@ from django.core.management import BaseCommand
 from django.utils import timezone
 
 from liveinconcert.models import Event, ArtistRating, EventRSVP
-from push.send import send_message
+from push.send import send_message_user
 
 
 class Command(BaseCommand):
@@ -19,5 +19,4 @@ class Command(BaseCommand):
 
         for user_pk, count in users.items():
             user = User.objects.get(pk=user_pk)
-            for token in user.firebasepushtoken_set.all():
-                send_message(token.token, '{} new concerts for you!'.format(count))
+            send_message_user(user, '{} new concerts for you!'.format(count))
